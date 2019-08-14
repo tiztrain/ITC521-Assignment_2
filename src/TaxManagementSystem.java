@@ -1,11 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TaxManagementSystem {
     public TaxManagementSystem(){
@@ -15,7 +15,7 @@ public class TaxManagementSystem {
     public void ViewRates() throws FileNotFoundException {
         // variables
         String output = "";
-        List<Double> valList = new ArrayList<Double>();
+        List<Double> valList = new ArrayList<>();
 
         // Create a File instance
         File inputRateFile = new File("taxrates.txt");
@@ -135,6 +135,11 @@ public class TaxManagementSystem {
 
 //        tax = taxPreviousBracket + (salaryBeforeTax - maxPreviousBracket) * taxRate;
 
+        /* % means the value after the comma
+        - mean that there is a buffer of x characters to the right
+        28 is the buffer length
+        s means that it displays the string
+         */
         System.out.printf("%-28s%-28s%-28s", "Employee ID", "Taxable Income", "Tax");
         System.out.println();
         System.out.printf("%-28s%-28s%-28s", empID, salaryBeforeTax, tax);
