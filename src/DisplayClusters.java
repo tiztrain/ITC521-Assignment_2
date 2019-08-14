@@ -1,25 +1,72 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 
-public class DisplayClusters {
+public class DisplayClusters extends Application {
     public DisplayClusters() {
 
     }
 
     public static void main(String[] args) throws IOException {
-        DisplayClusters task2 = new DisplayClusters();
-        task2.ScanText();
 
+        // create a task2 object
+        DisplayClusters task2 = new DisplayClusters();
+        // call the ScanText method
+//        task2.ScanText();
+        ArrayList<Cluster> clusters = task2.ScanText();
+//        launch(args);
+//        Stage classStage = new Stage();
+//        task2.start();
     }
 
-    public void ScanText() throws FileNotFoundException {
+
+    public void start(Stage primaryStage) throws FileNotFoundException {
+        DisplayClusters task2 = new DisplayClusters();
+        ArrayList<Cluster> clusters = new ArrayList<>();
+        clusters = task2.ScanText();
+
+        // Create a circle and set its properties
+
+        Pane pane = new Pane();
+//        for(int i=0; i<){
+//
+//        }
+        Circle circle = new Circle();
+        circle.setCenterX(50);
+        circle.setCenterY(50);
+
+        circle.setRadius(2);
+        circle.setStroke(Color.BLACK);
+        circle.setFill(Color.WHITE);
+
+        // Create a pane to hold the circle
+
+        pane.getChildren().add(circle);
+
+
+        // Create a scene and place it in the stage
+        Scene scene = new Scene(pane, 10, 10);
+        primaryStage.setTitle("Show Circle"); // Set the stage title
+        primaryStage.setScene(scene); // Place the scene in the stage
+        primaryStage.show(); // Display the stage
+    }
+
+    public ArrayList<Cluster> ScanText() throws FileNotFoundException {
         // variables
+        // a list to store all the individual items of the text file
         LinkedList<String> valList = new LinkedList<>();
+        // create a list of clusters
+        ArrayList<Cluster> clusters = new ArrayList<>();
 
         // Create a File instance
         File inputFile = new File("Cluster.txt");
@@ -40,38 +87,74 @@ public class DisplayClusters {
                 i = i + 1;
             }
 
-            // create a list of clusters
-            List<Cluster> clusters = new ArrayList<>();
-
             // assign 3 values to each cluster and move onto the next
             for (i = 0; i < valList.size(); i = i + 3) {
-                Cluster cluster = new Cluster(valList.get(i), valList.get(i + 1), valList.get(i + 2));
+                /* checking whether the value was numeric or not
+                if numeric, create a new cluster, if not then move to next
+                 */
+                boolean numeric = true;
+                // if the value is not numeric the catch stops the program from ending but changes numeric to false
+                try {
+                    double num = Double.parseDouble(valList.get(i));
+                } catch (NumberFormatException e) {
+                    numeric = false;
+                }
+                if (numeric) {
+                    Cluster cluster = new Cluster(Double.parseDouble(valList.get(i)), Double.parseDouble(valList.get(i + 1)), valList.get(i + 2));
 
-                // store cluster
-                clusters.add(cluster);
-                // print cluster
-                cluster.print();
+                    // store cluster
+                    clusters.add(cluster);
+                    // print cluster
+                    cluster.print();
+                } else {
+                    continue;
+                }
+
             }
-
         }
 
+        return clusters;
     }
 
-    class Cluster {
-        String x;
-        String y;
-        String cluster;
+}
 
-        Cluster(String x, String y, String cluster) {
-            this.x = x;
-            this.y = y;
-            this.cluster = cluster;
-        }
 
-        void print() {
-//            System.out.println(x + ' ' + y + ' ' + cluster);
-            System.out.printf("%-15s%-15s%-15s\n", x, y, cluster);
-        }
+class Cluster {
+    double x;
+    double y;
+    String cluster;
+
+    Cluster(double x, double y, String cluster) {
+        this.x = x;
+        this.y = y;
+        this.cluster = cluster;
     }
 
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public String getCluster() {
+        return cluster;
+    }
+
+    public void setCluster(String cluster) {
+        this.cluster = cluster;
+    }
+
+    void print() {
+        System.out.printf("%-15.3f%-15.3f%-15s\n", x, y, cluster);
+    }
 }
