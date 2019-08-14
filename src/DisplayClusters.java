@@ -24,38 +24,42 @@ public class DisplayClusters extends Application {
         // call the ScanText method
 //        task2.ScanText();
         ArrayList<Cluster> clusters = task2.ScanText();
-//        launch(args);
+        launch(args);
 //        Stage classStage = new Stage();
 //        task2.start();
     }
 
 
     public void start(Stage primaryStage) throws FileNotFoundException {
+        // I need to get used to doing this
         DisplayClusters task2 = new DisplayClusters();
         ArrayList<Cluster> clusters = new ArrayList<>();
         clusters = task2.ScanText();
 
-        // Create a circle and set its properties
-
+        // Create a pane to hold the circles
         Pane pane = new Pane();
-//        for(int i=0; i<){
-//
-//        }
-        Circle circle = new Circle();
-        circle.setCenterX(50);
-        circle.setCenterY(50);
 
-        circle.setRadius(2);
-        circle.setStroke(Color.BLACK);
-        circle.setFill(Color.WHITE);
+        // Create each circle and set its properties
+        for (int i = 0; i < clusters.size(); i++) {
+            // calling each clusters x&y values and assigning them to the variable
+            double x = clusters.get(i).getX();
+            double y = clusters.get(i).getY();
+            // create each circle for each cluster
+            Circle circle = new Circle();
+            // multiplied the values by 100 so they could be seen more easily
+            circle.setCenterX(x * 100);
+            circle.setCenterY(y * 100);
+            circle.setRadius(2);
+            circle.setStroke(Color.BLACK);
+            circle.setFill(Color.BLACK);
 
-        // Create a pane to hold the circle
-
-        pane.getChildren().add(circle);
+            // add circle to pane
+            pane.getChildren().add(circle);
+        }
 
 
         // Create a scene and place it in the stage
-        Scene scene = new Scene(pane, 10, 10);
+        Scene scene = new Scene(pane, 1000, 1000);
         primaryStage.setTitle("Show Circle"); // Set the stage title
         primaryStage.setScene(scene); // Place the scene in the stage
         primaryStage.show(); // Display the stage
