@@ -21,12 +21,11 @@ public class DisplayClusters extends Application {
 
         // create a task2 object
         DisplayClusters task2 = new DisplayClusters();
+
         // call the ScanText method
-//        task2.ScanText();
         ArrayList<Cluster> clusters = task2.ScanText();
         launch(args);
-//        Stage classStage = new Stage();
-//        task2.start();
+
     }
 
 
@@ -44,8 +43,10 @@ public class DisplayClusters extends Application {
             // calling each clusters x&y values and assigning them to the variable
             double x = clusters.get(i).getX();
             double y = clusters.get(i).getY();
+
             // create each circle for each cluster
             Circle circle = new Circle();
+
             // multiplied the values by 100 so they could be seen more easily
             circle.setCenterX(x * 100);
             circle.setCenterY(y * 100);
@@ -113,15 +114,12 @@ public class DisplayClusters extends Application {
                 } else {
                     continue;
                 }
-
             }
         }
 
         return clusters;
     }
-
 }
-
 
 class Cluster {
     double x;
