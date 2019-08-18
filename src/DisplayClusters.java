@@ -43,6 +43,7 @@ public class DisplayClusters extends Application {
             // calling each clusters x&y values and assigning them to the variable
             double x = clusters.get(i).getX();
             double y = clusters.get(i).getY();
+            String colour = clusters.get(i).getColour();
 
             // create each circle for each cluster
             Circle circle = new Circle();
@@ -51,8 +52,24 @@ public class DisplayClusters extends Application {
             circle.setCenterX(x * 100);
             circle.setCenterY(y * 100);
             circle.setRadius(2);
-            circle.setStroke(Color.BLACK);
-            circle.setFill(Color.BLACK);
+
+            // set each circles colour
+            if (colour.equals("RED")) {
+                circle.setStroke(Color.RED);
+                circle.setFill(Color.RED);
+            } else if (colour.equals("GREEN")) {
+                circle.setStroke(Color.GREEN);
+                circle.setFill(Color.GREEN);
+            } else if (colour.equals("BLUE")) {
+                circle.setStroke(Color.BLUE);
+                circle.setFill(Color.BLUE);
+            } else if (colour.equals("YELLOW")) {
+                circle.setStroke(Color.YELLOW);
+                circle.setFill(Color.YELLOW);
+            } else {
+                circle.setStroke(Color.BLACK);
+                circle.setStroke(Color.BLACK);
+            }
 
             // add circle to pane
             pane.getChildren().add(circle);
@@ -68,6 +85,7 @@ public class DisplayClusters extends Application {
 
     public ArrayList<Cluster> ScanText() throws FileNotFoundException {
         // variables
+        String colour;
         // a list to store all the individual items of the text file
         LinkedList<String> valList = new LinkedList<>();
         // create a list of clusters
@@ -83,7 +101,9 @@ public class DisplayClusters extends Application {
             // Read data from the input file
             int i = 0;
 
-            // while there is another string add value to valList and move on to the next
+            /* while there is another value add to valList and move on to the next
+            next for loop will catch any clusters that use strings in the x & y coloumn and remove them from the cluster
+             */
             while (input.hasNext()) {
                 String tempString;
                 // Save value to output variable
@@ -105,7 +125,23 @@ public class DisplayClusters extends Application {
                     numeric = false;
                 }
                 if (numeric) {
-                    Cluster cluster = new Cluster(Double.parseDouble(valList.get(i)), Double.parseDouble(valList.get(i + 1)), valList.get(i + 2));
+                    // create each cluster
+                    Cluster cluster = new Cluster(Double.parseDouble(valList.get(i)),
+                            Double.parseDouble(valList.get(i + 1)),
+                            valList.get(i + 2));
+
+                    // create colour value depending on the cluster number
+                    if (valList.get(i + 2).equals("Cluster1")) {
+                        cluster.setColour("RED");
+                    } else if (valList.get(i + 2).equals("Cluster2")) {
+                        cluster.setColour("GREEN");
+                    } else if (valList.get(i + 2).equals("Cluster3")) {
+                        cluster.setColour("BLUE");
+                    } else if (valList.get(i + 2).equals("Cluster4")) {
+                        cluster.setColour("YELLOW");
+                    } else {
+                        cluster.setColour("PURPLE");
+                    }
 
                     // store cluster
                     clusters.add(cluster);
@@ -125,8 +161,9 @@ class Cluster {
     double x;
     double y;
     String cluster;
+    String colour;
 
-    Cluster(double x, double y, String cluster) {
+    public Cluster(double x, double y, String cluster) {
         this.x = x;
         this.y = y;
         this.cluster = cluster;
@@ -156,7 +193,15 @@ class Cluster {
         this.cluster = cluster;
     }
 
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
     void print() {
-        System.out.printf("%-15.3f%-15.3f%-15s\n", x, y, cluster);
+        System.out.printf("%-15.3f%-15.3f%-15s%-15s\n", x, y, cluster, colour);
     }
 }
