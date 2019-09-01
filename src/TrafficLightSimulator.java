@@ -51,21 +51,9 @@ public class TrafficLightSimulator extends Application {
         Committed out because it is not being ran now anyways
          */
         // when a button is selected, run the action
-        btRed.setOnAction(event -> {
-            if (btRed.isSelected()) {
-                System.out.println(btRed.getText());
-            }
-        });
-        btRed.setOnAction(event -> {
-            if (btYellow.isSelected()) {
-                System.out.println(btYellow.getText());
-            }
-        });
-        btRed.setOnAction(event -> {
-            if (btGreen.isSelected()) {
-                System.out.println(btGreen.getText());
-            }
-        });
+        btRed.setOnAction(e -> System.out.println(btRed.getText()));
+        btYellow.setOnAction(e -> System.out.println(btYellow.getText()));
+        btGreen.setOnAction(e -> System.out.println(btGreen.getText()));
 
         return pane;
     }
@@ -124,13 +112,15 @@ public class TrafficLightSimulator extends Application {
             pane.setTop(paneForCircles);
             paneForCircles.setStyle("-fx-border-color: black");
             //paneForCircles.setMaxWidth(100);
+
+            // sets the margins of space for each side of the pane
             BorderPane.setMargin(paneForCircles, new Insets(25, 100, 25, 100));
 
             //paneForCircles.prefWidthProperty().bind(primaryStage.widthProperty().multiple(0.5));
 
 
 //            // when a button is selected, run the action
-//            btBlack.setOnAction(event -> {
+//            pane.btBlack.setOnAction(event -> {
 //                if (btBlack.isSelected()) {
 //                    System.out.println(btBlack.getText());
 //                }
