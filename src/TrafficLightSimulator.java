@@ -7,6 +7,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class TrafficLightSimulator extends Application {
@@ -35,6 +37,8 @@ public class TrafficLightSimulator extends Application {
         // set pane at bottom of stage
         pane.setBottom(paneForRadioButtons);
 
+        pane.setStyle("-fx-border-color: red");
+
         /* this toggles the radio buttons on and off if another has been selected otherwise all the radio buttons
         will stay on
          */
@@ -43,6 +47,9 @@ public class TrafficLightSimulator extends Application {
         btYellow.setToggleGroup(group);
         btGreen.setToggleGroup(group);
 
+        /*
+        Committed out because it is not being ran now anyways
+         */
         // when a button is selected, run the action
         btRed.setOnAction(event -> {
             if (btRed.isSelected()) {
@@ -71,7 +78,7 @@ public class TrafficLightSimulator extends Application {
         // Create a scene and add the panes to the stage
         Scene scene = new Scene(trafficPane.getTrafficPane(), 300, 300);
 
-        primaryStage.setTitle("TrafficLightSimulator"); // Set title
+        primaryStage.setTitle("Traffic Light Simulator"); // Set title
         primaryStage.setScene(scene); // Place the scene in the stage
         primaryStage.show(); // Display the stage
     }
@@ -83,50 +90,65 @@ public class TrafficLightSimulator extends Application {
             BorderPane pane = super.getButtonPane();
 
             // Create the vBox, set the spacing in between the circles and set the alignment
-            VBox paneForCircles = new VBox();
-            // Spacing in between circles
-            paneForCircles.setSpacing(5);
+            VBox paneForCircles = new VBox(5);
             // Padding around everything else
             paneForCircles.setPadding(new Insets(20));
+            // Centres the circles in the box
             paneForCircles.setAlignment(Pos.TOP_CENTER);
-            // Create the 3 radio buttons
+
             //TODO: replace with circles
-            RadioButton btBlack = new RadioButton("Black");
-            RadioButton btPurple = new RadioButton("Purple");
-            RadioButton btGrey = new RadioButton("Grey");
-            // Add the circles to the vBox
-            paneForCircles.getChildren().addAll(btBlack, btPurple, btGrey);
-            // set pane at bottom of stage
+
+            // create the circles
+            for (int i = 1; i <= 3; i++) {
+                Circle circle = new Circle();
+//        circle.setCenterX(50);
+//        circle.setCenterY(50);
+
+                circle.setCenterX(20 + i * 25);
+                circle.setCenterY(20 + i * 25);
+
+                circle.setRadius(20);
+                circle.setStroke(Color.BLACK);
+                circle.setFill(Color.WHITE);
+
+                paneForCircles.getChildren().addAll(circle);
+            }
+//            // Create the 3 radio buttons
+
+//            RadioButton btBlack = new RadioButton("Black");
+//            RadioButton btPurple = new RadioButton("Purple");
+//            RadioButton btGrey = new RadioButton("Grey");
+//            // Add the circles to the vBox
+//            paneForCircles.getChildren().addAll(btBlack, btPurple, btGrey);
+            // draws pane at top of stage
             pane.setTop(paneForCircles);
+            paneForCircles.setStyle("-fx-border-color: black");
+            //paneForCircles.setMaxWidth(100);
+            BorderPane.setMargin(paneForCircles, new Insets(25, 100, 25, 100));
+
+            //paneForCircles.prefWidthProperty().bind(primaryStage.widthProperty().multiple(0.5));
 
 
-            // when a button is selected, run the action
-            btBlack.setOnAction(event -> {
-                if (btBlack.isSelected()) {
-                    System.out.println(btBlack.getText());
-                }
-            });
-            btBlack.setOnAction(event -> {
-                if (btPurple.isSelected()) {
-                    System.out.println(btPurple.getText());
-                }
-            });
-            btBlack.setOnAction(event -> {
-                if (btGrey.isSelected()) {
-                    System.out.println(btGrey.getText());
-                }
-            });
+//            // when a button is selected, run the action
+//            btBlack.setOnAction(event -> {
+//                if (btBlack.isSelected()) {
+//                    System.out.println(btBlack.getText());
+//                }
+//            });
+//            btBlack.setOnAction(event -> {
+//                if (btPurple.isSelected()) {
+//                    System.out.println(btPurple.getText());
+//                }
+//            });
+//            btBlack.setOnAction(event -> {
+//                if (btGrey.isSelected()) {
+//                    System.out.println(btGrey.getText());
+//                }
+//            });
 
             return pane;
         }
 
     }
-
-
-//    // The handler method which the to be used when a button is pressed
-//    public void handleButtonAction(ActionEvent event){
-//        Button button = (Button)event.getSource();
-//        System.out.println(button.getText());
-//    }
 }
 
