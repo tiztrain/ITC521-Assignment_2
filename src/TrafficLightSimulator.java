@@ -11,7 +11,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
+/* TODO:
+ *  -clean up code
+ *   */
+
+
 public class TrafficLightSimulator extends Application {
+    protected Circle circle1 = new Circle();
+    protected Circle circle2 = new Circle();
+    protected Circle circle3 = new Circle();
+
 
     public static void main(String[] args) {
         launch(args);
@@ -48,12 +57,23 @@ public class TrafficLightSimulator extends Application {
         btGreen.setToggleGroup(group);
 
         /*
-        Committed out because it is not being ran now anyways
+        Sets the colours of the circles depending on which radio button was selected
          */
-        // when a button is selected, run the action
-        btRed.setOnAction(e -> System.out.println(btRed.getText()));
-        btYellow.setOnAction(e -> System.out.println(btYellow.getText()));
-        btGreen.setOnAction(e -> System.out.println(btGreen.getText()));
+        btRed.setOnAction(e -> {
+            circle1.setFill(Color.RED);
+            circle2.setFill(Color.WHITE);
+            circle3.setFill(Color.WHITE);
+        });
+        btYellow.setOnAction(e -> {
+            circle1.setFill(Color.WHITE);
+            circle2.setFill(Color.YELLOW);
+            circle3.setFill(Color.WHITE);
+        });
+        btGreen.setOnAction(e -> {
+            circle1.setFill(Color.WHITE);
+            circle2.setFill(Color.WHITE);
+            circle3.setFill(Color.GREEN);
+        });
 
         return pane;
     }
@@ -84,23 +104,25 @@ public class TrafficLightSimulator extends Application {
             // Centres the circles in the box
             paneForCircles.setAlignment(Pos.TOP_CENTER);
 
-            //TODO: replace with circles
+            // setup the circles
+            circle1.setCenterX(20 + 25);
+            circle1.setCenterY(20 + 25);
+            circle1.setRadius(20);
+            circle1.setStroke(Color.BLACK);
+            circle1.setFill(Color.WHITE);
+            circle2.setCenterX(20 + 25);
+            circle2.setCenterY(20 + 25);
+            circle2.setRadius(20);
+            circle2.setStroke(Color.BLACK);
+            circle2.setFill(Color.WHITE);
+            circle3.setCenterX(20 + 25);
+            circle3.setCenterY(20 + 25);
+            circle3.setRadius(20);
+            circle3.setStroke(Color.BLACK);
+            circle3.setFill(Color.WHITE);
 
-            // create the circles
-            for (int i = 1; i <= 3; i++) {
-                Circle circle = new Circle();
-//        circle.setCenterX(50);
-//        circle.setCenterY(50);
-
-                circle.setCenterX(20 + i * 25);
-                circle.setCenterY(20 + i * 25);
-
-                circle.setRadius(20);
-                circle.setStroke(Color.BLACK);
-                circle.setFill(Color.WHITE);
-
-                paneForCircles.getChildren().addAll(circle);
-            }
+            paneForCircles.getChildren().addAll(circle1, circle2, circle3);
+                
 //            // Create the 3 radio buttons
 
 //            RadioButton btBlack = new RadioButton("Black");
@@ -119,22 +141,9 @@ public class TrafficLightSimulator extends Application {
             //paneForCircles.prefWidthProperty().bind(primaryStage.widthProperty().multiple(0.5));
 
 
-//            // when a button is selected, run the action
-//            pane.btBlack.setOnAction(event -> {
-//                if (btBlack.isSelected()) {
-//                    System.out.println(btBlack.getText());
-//                }
-//            });
-//            btBlack.setOnAction(event -> {
-//                if (btPurple.isSelected()) {
-//                    System.out.println(btPurple.getText());
-//                }
-//            });
-//            btBlack.setOnAction(event -> {
-//                if (btGrey.isSelected()) {
-//                    System.out.println(btGrey.getText());
-//                }
-//            });
+//            btRed.setOnAction(e -> System.out.println(btRed.getText()));
+//            btYellow.setOnAction(e -> System.out.println(btYellow.getText()));
+//            btGreen.setOnAction(e -> System.out.println(btGreen.getText()));
 
             return pane;
         }
