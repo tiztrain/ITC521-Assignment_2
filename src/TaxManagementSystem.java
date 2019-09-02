@@ -147,8 +147,16 @@ public class TaxManagementSystem {
 
     public static void main(String[] args) throws IOException {
         TaxManagementSystem task1 = new TaxManagementSystem();
+        task1.mainMenu();
         task1.ViewRates();
         task1.calcTax();
+
+    }
+
+    public void mainMenu() {
+        System.out.println("Welcome to Tax Management System of XYZ\n");
+        System.out.println("Please select one of the following options:");
+        System.out.println("1. Calculate tax\n2. Search tax\n3. Exit\n");
 
     }
 }

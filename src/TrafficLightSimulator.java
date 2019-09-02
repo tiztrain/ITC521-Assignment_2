@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 /* TODO:
  *  -clean up code
+ * -remove red box
  *   */
 
 

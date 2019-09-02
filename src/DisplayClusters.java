@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/* Todo
+ *   - remove duplication
+ * - change yellow to another colour */
+
 public class DisplayClusters extends Application {
     public DisplayClusters() {
 
