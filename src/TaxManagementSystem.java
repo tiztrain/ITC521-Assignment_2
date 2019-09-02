@@ -7,6 +7,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// TODO: 2/09/2019 - comment out file better 
+
 public class TaxManagementSystem {
     public TaxManagementSystem(){
 
@@ -93,57 +95,6 @@ public class TaxManagementSystem {
         }
     }
 
-    public void calcTax(){
-        //temporary variables for testing
-        double taxPreviousBracket = 20797;
-        double maxPreviousBracket = 90000;
-        double taxRate;
-
-        double tax = 0;
-        int empID;
-        double salaryBeforeTax;
-
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Please enter enter the Employee's four digit ID number:");
-        empID = scan.nextInt();
-        System.out.println("Please enter the Employee's annual income as a number with two decimal places:");
-        salaryBeforeTax = scan.nextDouble();
-
-        if(salaryBeforeTax >= 0 && salaryBeforeTax <= 18200) {
-            tax = 0;
-        }
-        else if(salaryBeforeTax > 18200 && salaryBeforeTax <=37000){
-            taxRate = 0.19;
-            tax = taxRate * (salaryBeforeTax - 18200);
-        }
-        else if(salaryBeforeTax > 37000 && salaryBeforeTax <=90000){
-            taxRate = 0.325;
-            tax = 3572 + taxRate * (salaryBeforeTax - 37000);
-        }
-        else if(salaryBeforeTax > 90000 && salaryBeforeTax <=180000){
-            taxRate = 0.37;
-            tax = 20797 + taxRate * (salaryBeforeTax - 90000);
-        }
-        else if(salaryBeforeTax > 180000){
-            taxRate = 0.45;
-            tax = 54097 + taxRate * (salaryBeforeTax - 180000);
-        }
-        else{
-            System.out.println("The input that has been provided is invalid");
-            System.exit(0);
-        }
-
-//        tax = taxPreviousBracket + (salaryBeforeTax - maxPreviousBracket) * taxRate;
-
-        /* % means the value after the comma
-        - mean that there is a buffer of x characters to the right
-        28 is the buffer length
-        s means that it displays the string
-         */
-        System.out.printf("%-28s%-28s%-28s", "Employee ID", "Taxable Income", "Tax");
-        System.out.println();
-        System.out.printf("%-28s%-28s%-28s", empID, salaryBeforeTax, tax);
-    }
 
     public static void main(String[] args) throws IOException {
         int selectionNumber;
@@ -156,12 +107,44 @@ public class TaxManagementSystem {
         while (selectionNumber != 3) {
             if (selectionNumber == 1) {
                 task1.ViewRates();
-                task1.calcTax();
+                task1.writeTax();
                 selectionNumber = task1.mainMenu();
             }
         }
 
 
+    }
+
+    public void writeTax() {
+        EmployeeTax employee = new EmployeeTax();
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Please enter enter the Employee's four digit ID number:");
+        employee.setEmpID(scan.nextInt());
+        //int empID = scan.nextInt();
+        System.out.println("Please enter the Employee's annual income as a number with two decimal places:");
+        employee.setSalaryBeforeTax(scan.nextDouble());
+        //double salaryBeforeTax = scan.nextDouble();
+
+
+        employee.setTax();
+
+        int empID = employee.getEmpID();
+        double salaryBeforeTax = employee.getSalaryBeforeTax();
+        double tax = employee.getTax();
+
+        /* % means the value after the comma
+        - mean that there is a buffer of x characters to the right
+        28 is the buffer length
+        s means that it displays the string
+         */
+        System.out.printf("\nThe following information has been written to taxreport.txt");
+        System.out.printf("%-28s%-28s%-28s", "Employee ID", "Taxable Income", "Tax");
+        System.out.println();
+        System.out.printf("%-28s%-28s%-28s", empID, salaryBeforeTax, tax);
+
+        // TODO: 2/09/2019 - write the data to file
     }
 
     public int mainMenu() {
@@ -175,4 +158,77 @@ public class TaxManagementSystem {
 
         return result;
     }
+}
+
+class EmployeeTax {
+    //temporary variables for testing
+    double taxRate;
+
+    int empID;
+    double salaryBeforeTax;
+    double tax = 0;
+
+    public EmployeeTax() {
+
+    }
+
+    public EmployeeTax(int empID, double salaryBeforeTax, double tax) {
+        this.empID = empID;
+        this.salaryBeforeTax = salaryBeforeTax;
+        this.tax = tax;
+    }
+
+    public int getEmpID() {
+        return empID;
+    }
+
+    public void setEmpID(int empID) {
+        this.empID = empID;
+    }
+
+    public double getSalaryBeforeTax() {
+        return salaryBeforeTax;
+    }
+
+    public void setSalaryBeforeTax(double salaryBeforeTax) {
+        this.salaryBeforeTax = salaryBeforeTax;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax() {
+        // TODO: 2/09/2019 - fix up the hard coding
+        if (salaryBeforeTax >= 0 && salaryBeforeTax <= 18200) {
+            tax = 0;
+        } else if (salaryBeforeTax > 18200 && salaryBeforeTax <= 37000) {
+            taxRate = 0.19;
+            tax = taxRate * (salaryBeforeTax - 18200);
+        } else if (salaryBeforeTax > 37000 && salaryBeforeTax <= 90000) {
+            taxRate = 0.325;
+            tax = 3572 + taxRate * (salaryBeforeTax - 37000);
+        } else if (salaryBeforeTax > 90000 && salaryBeforeTax <= 180000) {
+            taxRate = 0.37;
+            tax = 20797 + taxRate * (salaryBeforeTax - 90000);
+        } else if (salaryBeforeTax > 180000) {
+            taxRate = 0.45;
+            tax = 54097 + taxRate * (salaryBeforeTax - 180000);
+        } else {
+            System.out.println("The input that has been provided is invalid");
+            System.exit(0);
+        }
+        //tax = taxPreviousBracket + (salaryBeforeTax - maxPreviousBracket) * taxRate;
+    }
+
+
+//    @Override
+//    public String toString() {
+//        return "Tax{" +
+//                "empID=" + empID +
+//                ", salaryBeforeTax=" + salaryBeforeTax +
+//                ", tax=" + tax +
+//                '}';
+//    }
+
 }
