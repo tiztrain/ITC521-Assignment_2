@@ -146,17 +146,33 @@ public class TaxManagementSystem {
     }
 
     public static void main(String[] args) throws IOException {
+        int selectionNumber;
+
+        System.out.println("Welcome to Tax Management System of XYZ");
+
         TaxManagementSystem task1 = new TaxManagementSystem();
-        task1.mainMenu();
-        task1.ViewRates();
-        task1.calcTax();
+        selectionNumber = task1.mainMenu();
+
+        while (selectionNumber != 3) {
+            if (selectionNumber == 1) {
+                task1.ViewRates();
+                task1.calcTax();
+                selectionNumber = task1.mainMenu();
+            }
+        }
+
 
     }
 
-    public void mainMenu() {
-        System.out.println("Welcome to Tax Management System of XYZ\n");
-        System.out.println("Please select one of the following options:");
-        System.out.println("1. Calculate tax\n2. Search tax\n3. Exit\n");
+    public int mainMenu() {
+        Scanner input = new Scanner(System.in);
 
+        System.out.println("\n\nPlease select one of the following options:");
+        System.out.println("1. Calculate tax\n2. Search tax\n3. Exit\n");
+        System.out.print("Please enter a integer: ");
+
+        int result = input.nextInt();
+
+        return result;
     }
 }
