@@ -1,13 +1,13 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// TODO: 2/09/2019 - comment out file better 
+/* TODO: 2/09/2019 - comment out file better
+ *   create the search function*/
+
 
 public class TaxManagementSystem {
     public TaxManagementSystem(){
@@ -28,7 +28,6 @@ public class TaxManagementSystem {
 
             // Read data from a file
             while (input.hasNext()) {
-
                 // Save value to output variable
                 output += input.next() + " ";
             }
@@ -107,7 +106,7 @@ public class TaxManagementSystem {
         while (selectionNumber != 3) {
             if (selectionNumber == 1) {
                 task1.ViewRates();
-                task1.writeTax();
+                task1.writeTaxReport();
                 selectionNumber = task1.mainMenu();
             }
         }
@@ -115,45 +114,64 @@ public class TaxManagementSystem {
 
     }
 
-    public void writeTax() {
+    public void writeTaxReport() {
+        //create employee object from employeetax object
         EmployeeTax employee = new EmployeeTax();
 
+        //create scan object to read user input in console
         Scanner scan = new Scanner(System.in);
 
+        //asking the user for input
         System.out.println("Please enter enter the Employee's four digit ID number:");
         employee.setEmpID(scan.nextInt());
-        //int empID = scan.nextInt();
         System.out.println("Please enter the Employee's annual income as a number with two decimal places:");
         employee.setSalaryBeforeTax(scan.nextDouble());
-        //double salaryBeforeTax = scan.nextDouble();
 
-
+        //call the setTax method of the object to calculate the tax number
         employee.setTax();
 
+        // assign method results to variables
         int empID = employee.getEmpID();
         double salaryBeforeTax = employee.getSalaryBeforeTax();
         double tax = employee.getTax();
 
+        //using this display to show that it works
         /* % means the value after the comma
         - mean that there is a buffer of x characters to the right
         28 is the buffer length
         s means that it displays the string
          */
-        System.out.printf("\nThe following information has been written to taxreport.txt");
+        System.out.printf("\nThe following information has been written to taxreport.txt\n");
         System.out.printf("%-28s%-28s%-28s", "Employee ID", "Taxable Income", "Tax");
         System.out.println();
         System.out.printf("%-28s%-28s%-28s", empID, salaryBeforeTax, tax);
 
-        // TODO: 2/09/2019 - write the data to file
+        //writing the data to file
+        PrintWriter printWriter = null;
+        try {
+            File file = new File("taxreport.txt");
+            FileWriter fileWriter = new FileWriter(file, true);
+            printWriter = new PrintWriter(fileWriter);
+            printWriter.printf("%-28s%-28s%-28s", empID, salaryBeforeTax, tax);
+            printWriter.println();
+        } catch (IOException e) {
+            System.out.println(e);
+        } finally {
+            if (printWriter != null) {
+                printWriter.close();
+            }
+        }
+
     }
 
     public int mainMenu() {
+        //create scanner object to accept input from user into the console
         Scanner input = new Scanner(System.in);
 
+        //instructions for user
         System.out.println("\n\nPlease select one of the following options:");
         System.out.println("1. Calculate tax\n2. Search tax\n3. Exit\n");
         System.out.print("Please enter a integer: ");
-
         int result = input.nextInt();
 
         return result;
@@ -220,15 +238,5 @@ class EmployeeTax {
         }
         //tax = taxPreviousBracket + (salaryBeforeTax - maxPreviousBracket) * taxRate;
     }
-
-
-//    @Override
-//    public String toString() {
-//        return "Tax{" +
-//                "empID=" + empID +
-//                ", salaryBeforeTax=" + salaryBeforeTax +
-//                ", tax=" + tax +
-//                '}';
-//    }
 
 }
