@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -10,7 +11,7 @@ import java.util.regex.Pattern;
 
 
 public class TaxManagementSystem {
-    public TaxManagementSystem(){
+    public TaxManagementSystem() {
 
     }
 
@@ -108,6 +109,12 @@ public class TaxManagementSystem {
                 task1.ViewRates();
                 task1.writeTaxReport();
                 selectionNumber = task1.mainMenu();
+            } else if (selectionNumber == 2) {
+                task1.searchTaxReport();
+                selectionNumber = task1.mainMenu();
+            } else {
+                System.out.println("Incorrect value given. Please provide a number that is associated with the task required");
+                selectionNumber = task1.mainMenu();
             }
         }
 
@@ -161,8 +168,38 @@ public class TaxManagementSystem {
                 printWriter.close();
             }
         }
-
     }
+
+    public void searchTaxReport() throws FileNotFoundException {
+        // variables
+        String output = "";
+        LinkedList<String> valList = new LinkedList<>();
+
+        // Create a File instance
+        File file = new File("taxreport.txt");
+        if (file.exists()) {
+            //variables
+            int i = 0;
+
+            System.out.println("Found taxreport.txt");
+
+            // Create a Scanner for the file
+            Scanner scanner = new Scanner(file);
+            // Read data from a file
+            while (scanner.hasNext()) {
+                // Save value to output variable if the value is a number
+                String tempStr = (scanner.next());
+                valList.add(i, tempStr);
+                i += 1;
+            }
+            System.out.println(valList.toString());
+        } else {
+            System.out.println("Could not find taxreport.txt");
+        }
+
+        /* TODO: turn valList into a list with only numbers */
+    }
+
 
     public int mainMenu() {
         //create scanner object to accept input from user into the console
@@ -238,5 +275,4 @@ class EmployeeTax {
         }
         //tax = taxPreviousBracket + (salaryBeforeTax - maxPreviousBracket) * taxRate;
     }
-
 }

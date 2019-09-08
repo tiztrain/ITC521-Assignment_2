@@ -125,9 +125,12 @@ public class DisplayClusters extends Application {
                 // if the value is not numeric the catch stops the program from ending but changes numeric to false
                 try {
                     double num = Double.parseDouble(valList.get(i));
-                } catch (NumberFormatException e) {
+                }
+                // changes numeric to false if there is an error
+                catch (NumberFormatException e) {
                     numeric = false;
                 }
+                // only runs if numeric is true
                 if (numeric) {
                     // create each cluster
                     Cluster cluster = new Cluster(Double.parseDouble(valList.get(i)),
