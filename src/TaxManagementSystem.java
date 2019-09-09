@@ -174,6 +174,7 @@ public class TaxManagementSystem {
         // variables
         String output = "";
         LinkedList<String> valList = new LinkedList<>();
+        LinkedList<Double> numList = new LinkedList<>();
 
         // Create a File instance
         File file = new File("taxreport.txt");
@@ -192,12 +193,57 @@ public class TaxManagementSystem {
                 valList.add(i, tempStr);
                 i += 1;
             }
-            System.out.println(valList.toString());
+            System.out.println("valList = " + valList.toString());
+
+            // j used as a counter in numList in the forloop
+            int j = 0;
+            // if value in ValList is a number, add to numList otherwise skip
+            for (i = 0; i < valList.size(); i++) {
+                /* checking whether the value was numeric or not
+                if numeric, create a new cluster, if not then move to next
+                 */
+                boolean numeric = true;
+                // if the value is not numeric the catch stops the program from ending but changes numeric to false
+                try {
+                    double num = Double.parseDouble(valList.get(i));
+                }
+                // changes numeric to false if there is an error
+                catch (NumberFormatException e) {
+                    numeric = false;
+                }
+
+                // only runs if numeric is true
+                if (numeric) {
+                    numList.add(j, Double.parseDouble(valList.get(i)));
+                    j++;
+                }
+            }
+            System.out.println("numList = " + numList.toString());
         } else {
             System.out.println("Could not find taxreport.txt");
         }
 
-        /* TODO: turn valList into a list with only numbers */
+        //ask user for employee id and co
+        System.out.println("Please enter an employee ID to search through the tax file for: ");
+        Scanner scan = new Scanner(System.in);
+        int userIdInput = scan.nextInt();
+
+
+        //check if employee id is the same as every 3rd number value
+        int i;
+
+        for (i = 0; i < numList.size(); i = i + 3) {
+            //convert double number in numList to interger
+            Double d = numList.get(i);
+            int listValueInt = d.intValue();
+
+            //check if user input matches any of the employee ids in list
+            if (userIdInput == listValueInt) {
+
+            }
+        }
+
+        /* TODO: check every 3rd value to see if it matches the user input */
     }
 
 
