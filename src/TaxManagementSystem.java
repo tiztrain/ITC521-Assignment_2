@@ -117,8 +117,6 @@ public class TaxManagementSystem {
                 selectionNumber = task1.mainMenu();
             }
         }
-
-
     }
 
     public void writeTaxReport() {
@@ -173,8 +171,16 @@ public class TaxManagementSystem {
     public void searchTaxReport() throws FileNotFoundException {
         // variables
         String output = "";
+        // list that holds all items from the text file
         LinkedList<String> valList = new LinkedList<>();
+        // list that removes the string values from valList
         LinkedList<Double> numList = new LinkedList<>();
+        /*list used to hold the final details of the employee. If the employee is in the
+         * numList twice, just show the last occurance*/
+        LinkedList<Double> empDetailList = new LinkedList<>();
+        empDetailList.add(0, 0.0);
+        empDetailList.add(1, 0.0);
+        empDetailList.add(2, 0.0);
 
         // Create a File instance
         File file = new File("taxreport.txt");
@@ -233,17 +239,31 @@ public class TaxManagementSystem {
         int i;
 
         for (i = 0; i < numList.size(); i = i + 3) {
-            //convert double number in numList to interger
+            //convert double number in numList to integer
             Double d = numList.get(i);
             int listValueInt = d.intValue();
 
-            //check if user input matches any of the employee ids in list
+            //check if user input matches any of the employee ids in list and display details
             if (userIdInput == listValueInt) {
+//                //#used to display values to screen to test
+//                System.out.println();
+//                System.out.println("EmployeeID: " + userIdInput);
+//                System.out.println("Salary Before Tax: " + numList.get(i+1));
+//                System.out.println("Tax: " + numList.get(i+2));
 
+                //overwrites the values in empDetailList if found
+                empDetailList.set(0, numList.get(i));
+                empDetailList.set(1, numList.get(i + 1));
+                empDetailList.set(2, numList.get(i + 2));
             }
         }
 
-        /* TODO: check every 3rd value to see if it matches the user input */
+        //Display results
+        System.out.println();
+        System.out.println("EmployeeID: " + empDetailList.get(0));
+        System.out.println("Salary Before Tax: " + empDetailList.get(1));
+        System.out.println("Tax amount for year: " + empDetailList.get(2));
+
     }
 
 
