@@ -86,7 +86,6 @@ public class TaxManagementSystem {
 
             // Close the file
             input.close();
-
         }
 
         // covers if user did not have a taxrate file
