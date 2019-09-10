@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-/* Todo
- *   - remove duplication
- * - change yellow to another colour */
 
 public class DisplayClusters extends Application {
     public DisplayClusters() {
@@ -152,8 +149,8 @@ public class DisplayClusters extends Application {
 
                     // store cluster
                     clusters.add(cluster);
-                    // print cluster
-                    cluster.print();
+//                    // print cluster
+//                    cluster.print();
                 } else {
                     continue;
                 }
@@ -208,7 +205,7 @@ class Cluster {
         this.colour = colour;
     }
 
-    void print() {
-        System.out.printf("%-15.3f%-15.3f%-15s%-15s\n", x, y, cluster, colour);
-    }
+//    void print() {
+//        System.out.printf("%-15.3f%-15.3f%-15s%-15s\n", x, y, cluster, colour);
+//    }
 }
