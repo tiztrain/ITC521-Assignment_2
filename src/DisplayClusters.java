@@ -67,9 +67,9 @@ public class DisplayClusters extends Application {
             } else if (colour.equals("BLUE")) {
                 circle.setStroke(Color.BLUE);
                 circle.setFill(Color.BLUE);
-            } else if (colour.equals("YELLOW")) {
-                circle.setStroke(Color.YELLOW);
-                circle.setFill(Color.YELLOW);
+            } else if (colour.equals("ORANGE")) {
+                circle.setStroke(Color.ORANGE);
+                circle.setFill(Color.ORANGE);
             } else {
                 circle.setStroke(Color.BLACK);
                 circle.setStroke(Color.BLACK);
@@ -145,7 +145,7 @@ public class DisplayClusters extends Application {
                     } else if (valList.get(i + 2).equals("Cluster3")) {
                         cluster.setColour("BLUE");
                     } else if (valList.get(i + 2).equals("Cluster4")) {
-                        cluster.setColour("YELLOW");
+                        cluster.setColour("ORANGE");
                     } else {
                         cluster.setColour("PURPLE");
                     }
